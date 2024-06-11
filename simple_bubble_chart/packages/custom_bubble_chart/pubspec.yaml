@@ -1,0 +1,21 @@
+name: custom_bubble_chart
+description: A new Flutter package project.
+version: 1.0.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+# Add your library dependencies here
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# Add your dev dependencies here
+
+flutter:
+  # Add any Flutter specific configurations here
