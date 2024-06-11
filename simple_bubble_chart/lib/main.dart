@@ -61,23 +61,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  List<BubbleNode> childNode = [];
-  List<List<BubbleNode>> nodes = [];
+  List<List<List<BubbleNode>>> bubbleNodes = [];
 
   @override
   void initState() {
     super.initState();
 
+    List<List<BubbleNode>> newNodes = [];
+    bubbleNodes.add(newNodes);
     for (var i = 0; i < 10; i++) {
       Future.delayed(Duration(milliseconds: 700 * i), () {
-        _addNewNode();
+        _addNewNode(newNodes);
       });
     }
   }
 
-  _addNewNode() {
+  _addNewBubbleNode() {
+    List<List<BubbleNode>> newNodes = [];
+    bubbleNodes.add(newNodes);
+    for (var i = 0; i < 10; i++) {
+      Future.delayed(Duration(milliseconds: 700 * i), () {
+        _addNewNode(newNodes);
+      });
+    }
+  }
+
+  _addNewNode(List<List<BubbleNode>> newNodes) {
     setState(() {
-      childNode = [];
+      List<BubbleNode> childNode = [];
 
       Random random = Random();
 
@@ -110,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage>
       };
       childNode.add(node);
 
-      nodes.add(childNode);
+      newNodes.add(childNode);
     });
   }
 
@@ -132,17 +143,31 @@ class _MyHomePageState extends State<MyHomePage>
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: BubbleChartLayout(
+      body: Row(
         children: [
-          ...nodes.map((e) {
-            return BubbleNode.node(
-              padding: 15,
-              children: e,
-              options: BubbleOptions(color: Colors.transparent),
+          ...bubbleNodes.map((e) {
+            return Expanded(
+              child: BubbleChartLayout(
+                children: [
+                  ...e.map((e) {
+                    return BubbleNode.node(
+                      padding: 15,
+                      children: e,
+                      options: BubbleOptions(color: Colors.transparent),
+                    );
+                  }),
+                ],
+                duration: const Duration(milliseconds: 500),
+              ),
             );
           }),
         ],
-        duration: const Duration(milliseconds: 500),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Text("+"),
+        onPressed: () {
+          _addNewBubbleNode();
+        },
       ),
     );
   }
