@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage>
                 children: [
                   ...e.map((e) {
                     return BubbleNode.node(
-                      padding: 15,
+                      padding: 5,
                       children: e,
                       options: BubbleOptions(color: Colors.transparent),
                     );
